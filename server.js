@@ -11,21 +11,6 @@ const { v4: uuidv4 } = require("uuid");
 const saltRounds = 10;
 
 
-// const url = process.env.MONGO_DB_URL || `mongodb+srv://kamalsingh:<${process.env.MONGODB_PASSWORD}>@cluster0.baambk7.mongodb.net/?retryWrites=true&w=majority`;
-// const client = new MongoClient(url);
-
-// const DB_NAME = process.env.DB_NAME || "brewVerse";
-// const DB_COLLECTION_NAME = process.env.DB_COLLECTION_NAME || "userData";
-// const db = client.db(DB_NAME);
-// const coll = db.collection(DB_COLLECTION_NAME);
-
-// var con = mysql.createConnection({
-//   host: "sql12.freemysqlhosting.net",
-//   user: "sql12660423",
-//   password: "LLmXcGLFZB",
-//   port: 3306,
-
-// });
 /*
 const url = 'mongodb://localhost:27017'; // Change this URL to your MongoDB connection string
 const DB_NAME = 'brewVerse';
