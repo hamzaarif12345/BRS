@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrewVerse</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+  </head>
+  <body>
+    <style>
+
+
+.header {
+        border-end-end-radius: 25px;
+        border-end-start-radius: 25px;
+        overflow: hidden;
+        background-color: lightcyan;
+        padding: 20px 10px;
+      }
+
+      .cardHover :hover{
+        cursor: pointer;
+      }
+
+      
+
+      /* Style the header links */
+      .header a {
+        float: left;
+        color: black;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        line-height: 25px;
+        border-radius: 4px;
+      }
+
+      /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+      .header a.logo {
+        font-size: 25px;
+        font-weight: bold;
+      }
+
+      /* Change the background color on mouse-over */
+      .header a:hover {
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color: #ddd;
+        color: black;
+      }
+
+      /* Style the active/current link*/
+      .header a.active {
+        background-color: dodgerblue;
+        color: white;
+      }
+
+      #cardHolder{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      }
+
+      /* Float the link section to the right */
+      .header-right {
+        float: right;
+      }
+
+      .dropdown {
+    position: absolute;
+    top: 50px; /* Adjust the vertical position as needed */
+    right: 0;
+    display: block;
+    }
+
+      /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+      @media screen and (max-width: 500px) {
+        .header a {
+          float: none;
+          display: block;
+          text-align: left;
+        }
+        .header-right {
+          float: none;
+        }
+      }
+
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+  body {
+    background: lightgoldenrodyellow;
+  }
+
+  .rating-box {
+    width: fit-content;
+    position: relative;
+    background: lightsalmon;
+    padding: 25px 50px 35px;
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  }
+  .rating-box header {
+    font-size: 22px;
+    color: #000000;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .rating-box .stars {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  .stars i {
+    color: #e6e6e6;
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .stars i.active {
+    color: #ff9c1a;
+  }
+
+  .brewDetailsHolder{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+    </style>
+
+        
+        <div class="header" style="display: flex; align-items: center; justify-content: space-between;">
+            <img  src="beer.png" width="50px" class="logo" onclick="location.href='/'"></img>
+            <div style="display: flex; ">
+              <input style="width: 400px;" class="form-control mx-2" id="searchBarText" type="text" minlength="2">
+              <button style="border-radius: 10px; padding: 10px; " onclick="searchBarText()">Search</button>
+            </div>
+
+            <div class="header-right" style="display: flex;">
+                <p style="font-size: 30px;padding-right: 10px; margin-top: 10px;">Welcome, <%= locals.username %></p>
+                <button type="button" class="btn" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="account.svg" style="margin-top: 0;" width="50px" class="logo" ></img>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" style="color: red;border:1px solid red;" onclick="logout()" >LOGOUT</a></li>
+                  </ul>
+                </button>
+            </div>
+        </div>
+        <div class="brewDetailsHolder">
+          <div style=" width: 1000px; border-radius: 25px;background-color: #fad6ad; padding: 20px; font-size: large;">
+            <p><strong> Name: </strong><%= locals.details["name"] %></p>
+            <p><strong> Id: </strong><%= locals.details.id%></p>
+            <p><strong>Brewery type: </strong> <%= locals.details["brewery_type"] %></p>
+            <p><strong>Address: </strong> <%= locals.details["address_1"] %></p>
+            <p><strong>Street: </strong> <%= locals.details["street"] %></p>
+            <p><strong>City: </strong> <%= locals.details["city"] %></p>
+            <p><strong>State: </strong> <%= locals.details["state"] %></p>
+            <p><strong>Phone: </strong> <%= locals.details["phone"] %></p>
+            <p><strong>Website: </strong> <%= locals.details["website_url"] %></p>
+          
+            
+        <div style="display: flex; justify-content: center; align-items: center;">
+        <div class="rating-box">
+          <header><strong>How was your experience?</strong></header>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <br>
+        <!-- <form style="text-align: center;" method="POST", onsubmit="return validateReviewForm('<%= locals.username %>')">
+          <input id="breweryID" type="hidden" value="<%= locals.details['id'] %>">
+          <input id="ratingField" type="hidden" value="rating-0">
+          <label for="feedBackInput"><strong>Please provide your feedback:</strong></label>
+          <textarea required id="commentContent" class="form-control my-2" minlength="10" name="feedBackInput" id="feedBackInput" cols="30" rows="10"></textarea>
+          <button onclick="this.disabled=true;" type="submit">Submit</button>
+        </form> -->
+        <form style="text-align: center;" method="POST" onsubmit="return validateReviewForm('<%= locals.username %>')">
+  <input id="breweryID" type="hidden" value="<%= locals.details.id %>">
+  <!-- <input id="breweryID" type="hidden" value=id1> -->
+  <input id="ratingField" type="hidden" value="">
+  <label for="commentContent"><strong>Please provide your feedback:</strong></label>
+  <textarea required id="commentContent" class="form-control my-2" minlength="10" name="feedBackInput" cols="30" rows="10"></textarea>
+  <button id="submitButton" type="submit">Submit</button>
+</form>
+
+<script>
+  document.getElementById('submitButton').addEventListener('click', function(e) {
+    this.disabled = true;
+    if (!validateReviewForm('<%= locals.username %>')) {
+      e.preventDefault();
+      this.disabled = false;
+    }
+  });
+</script>
+      </div>
+      
+    </div>
+    <p><%locals.reviews && 'User Reviews:' %></p>
+    <div style=" align-items: center; justify-content: center;">
+      <% if (locals.reviews !=null){ %>
+       <% locals.reviews["ratings"] && locals.reviews["ratings"].forEach(review => { %>
+            <div class="card my-2 cardHover" style="width: 55rem;">
+            <div class="card-body">
+              <div class="card-title" style="display: flex; align-items: center;justify-content: space-between;" ><strong> <%= review["user"] %></strong> <span style="text-align: end;"> <%= review["rating"].charAt(review["rating"].length-1) %>⭐</span></div>
+              <hr>
+              <div class="card-text">
+                <%= review["comment"] %>
+              </div>
+            </div>
+          </div>
+    <% }); %>
+    <% } %> 
+  </div>
+      </div>
+    </div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-body">Review posted! Thank you!</div>
+            </div>
+          </div>
+  <script>
+          
+      const toastLiveExample = document.getElementById("liveToast");
+      function submitReviewToast() {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        toastBootstrap.show();
+      }
+
+      function validateReviewForm(userName){
+        let ratingField = document.getElementById('ratingField');
+        let breweryID = document.getElementById('breweryID');
+        let commentContent = document.getElementById('commentContent');
+          const stars = document.querySelectorAll(".stars i");
+              stars.forEach((star, i) => {
+                if(star.classList.contains("rating")){
+                  if(star.classList.contains("0")){
+                    ratingField.value = "rating-1";
+                  }else if (star.classList.contains("1")){
+                    ratingField.value = "rating-2";
+                  }else if(star.classList.contains("2")){
+                    ratingField.value = "rating-3";
+                  }else if(star.classList.contains("3")){
+                    ratingField.value = "rating-4";
+                  }else if (star.classList.contains("4")){
+                    ratingField.value = "rating-5";
+                  }
+                }
+              });
+              submitReviewToast()
+
+              fetch("http://localhost:3000/userFeedBack", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: new URLSearchParams({
+                    'comment': commentContent.value,
+                    'rating': ratingField.value,
+                    'breweryid': breweryID.value,
+                    'user': userName
+                })
+              }).then((err)=>{
+                if(err)
+                console.log(err)
+              })
+              return false;
+      }
+//       function validateReviewForm(userName) {
+//   let ratingField = document.getElementById('ratingField');
+//   let breweryID = document.getElementById('breweryID');
+//   let commentContent = document.getElementById('commentContent');
+
+//   const stars = document.querySelectorAll(".stars i");
+//   stars.forEach((star, i) => {
+//     if (star.classList.contains("rating")) {
+//       if (star.classList.contains("0")) {
+//         ratingField.value = "rating-1";
+//       } else if (star.classList.contains("1")) {
+//         ratingField.value = "rating-2";
+//       } else if (star.classList.contains("2")) {
+//         ratingField.value = "rating-3";
+//       } else if (star.classList.contains("3")) {
+//         ratingField.value = "rating-4";
+//       } else if (star.classList.contains("4")) {
+//         ratingField.value = "rating-5";
+//       }
+//     }
+//   });
+
+//   const data = new URLSearchParams({
+//     'breweryid': breweryID.value,
+//     'comment': commentContent.value,
+//     'rating': ratingField.value,
+    
+//     'user': userName
+//   });
+
+//   console.log("Sending data:", data.toString());
+
+//   fetch("http://localhost:3000/userFeedBack", {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+//     },
+//     body: data
+//   }).then(response => {
+//     return response.text();
+//   }).then(data => {
+//     console.log("Response from server:", data);
+//   }).catch((err) => {
+//     console.error("Error:", err);
+//   });
+
+//   submitReviewToast();
+//   return false;
+// }
+
+
+      function searchBarText(){
+        window.location.href = "/";
+        let searchBarText = document.getElementById('searchBarText');
+        let cardHolder = document.getElementById('cardHolder');
+        var searchTerm = searchBarText.value;
+        searchTerm = searchTerm.split(" ").join('_');
+        console.log("SEARCH...", searchTerm)
+        try {
+          fetch("http://localhost:3000/brewSearch", {
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: new URLSearchParams({
+                    'searchTerm': searchBarText.value
+                })
+          }).then((res)=>{
+              return res.json();
+          }).then((data)=>{
+              cardHolder.innerHTML = '';
+            data.forEach(brew => {
+              cardHolder.innerHTML += `
+            <div class="card my-2 cardHover" style="width: 25rem;" onclick="openBrewPage('${brew["id"]}')">
+            <div class="card-body">
+              <div class="card-title">${brew['name']} ${brew['rating']}</div>
+              <hr>
+              <div class="card-text">
+                ${brew["address_1"]== null? '...' : brew["address_1"]}
+                ${brew["phone"] == null? '...' : brew["phone"]}
+                ${brew["website_url"] == null? '...' : brew["website_url"]}
+<!-- ADDRESS, Phone number, Web site URL,   State, City, rating-->
+              </div>
+            </div>
+          </div>
+            `;
+            });
+
+          })
+        } catch (error) {
+          console.log("error: ", error)
+        }
+      }
+
+      
+
+      function openBrewPage(brewID){
+        if(brewID){
+          window.location.href =  `http://localhost:3000/${brewID}`;
+        }
+      }
+
+      function logout(){
+        try{
+          fetch("http://localhost:3000/logout").then(()=>{
+            location.reload();
+          });
+        }catch(e){
+          console.log(e);
+        }
+      }
+
+      const stars = document.querySelectorAll(".stars i");
+  // Loop through the "stars" NodeList
+  stars.forEach((star, index1) => {
+    // Add an event listener that runs a function when the "click" event is triggered
+    star.addEventListener("click", () => {
+      // Loop through the "stars" NodeList Again
+      stars.forEach((star, index2) => {
+        // Add the "active" class to the clicked star and any stars with a lower index
+        // and remove the "active" class from any stars with a higher index
+        index1 >= index2 ? star.classList.add(`active`, "rating", index2) : star.classList.remove("active");
+      });
+    });
+  });
+
+        </script>
+  </body>
+</html>

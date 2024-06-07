@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOPE</title>
+  </head>
+  <body>
+    <h1>Looks like you are lost, Get back!</h1>
+    <h3 id="redirectCounter">Redirecting you back to home in: 5</h3>
+    <script>
+      let counterText = document.getElementById("redirectCounter");
+      let time = 5;
+      setInterval(() => {
+        time--;
+        if (time <= 0) {
+          window.location.href = "/";
+        } else {
+          counterText.innerText = `Redirecting you back to home in: ${time}`;
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
