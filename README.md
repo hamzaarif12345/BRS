@@ -18,7 +18,7 @@ Users can provied ratings and add reviews.
 - MySQL - Store the signup and login details.
 
 ## How to Run
-- ``` git clone https://github.com/hamzaarif12345/MoEngage.git ```
+- ``` git clone https://github.com/hamzaarif12345/BRS.git ```
 -   3rd party api ```https://www.openbrewerydb.org/documentation ```
 - Installing all dependencies
    - ``` npm i ```
